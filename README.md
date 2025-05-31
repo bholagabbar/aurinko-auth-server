@@ -2,6 +2,17 @@
 
 Open source OAuth server for Gmail authentication using [Aurinko](https://aurinko.io). Handles the [2-hop Account OAuth flow](https://docs.aurinko.io/authentication/oauth-flow/account-oauth-flow), token exchange, and stores tokens in Redis.
 
+## What is this?
+
+**TL;DR**: A ready-to-deploy server that handles the annoying OAuth dance so your app can access users' Gmail accounts in literally 5 minutes.
+
+After trying multiple unified mailbox APIs, I found Aurinko to be the easiest and most affordable solution. This server wraps their OAuth flow into a simple, deployable microservice. Just hit `/auth/init?userId=123`, and it handles everything - the Google consent screen, token exchange, and secure storage. Your app gets Gmail access without writing a single line of OAuth code.
+
+Perfect for:
+- SaaS apps that need to read/send emails on behalf of users
+- Building email clients or CRM integrations  
+- Any app that needs Gmail access without the OAuth headache
+
 ## Deploy Directly with Docker
 
 Just set your Aurinko credentials and you're ready to go:
