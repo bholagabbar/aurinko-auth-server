@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: aurinko-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  auth-server:
+    build: .
+    container_name: aurinko-auth-server
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - PORT=8000
+      - HOST=0.0.0.0
+      # Add your Aurinko credentials here or use .env file
+      - AURINKO_CLIENT_ID=${AURINKO_CLIENT_ID}
+      - AURINKO_CLIENT_SECRET=${AURINKO_CLIENT_SECRET}
+      - OAUTH_SUCCESS_URL=${OAUTH_SUCCESS_URL:-http://localhost:8000/email/connected}
+      - BASE_URL=${BASE_URL:-http://localhost:8000} # Optional base URL, though we're able to infer it directly
+      - WEBHOOK_URL=${WEBHOOK_URL} # Incase you want to be notified when the OAuth flow is complete, not needed 
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  redis_data: 
