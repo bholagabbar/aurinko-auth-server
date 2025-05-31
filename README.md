@@ -1,6 +1,6 @@
 # Aurinko Auth Server
 
-Open source OAuth server for Gmail authentication using [Aurinko](https://aurinko.io). Handles the 2-hop OAuth flow, token exchange, and stores tokens in Redis.
+Open source OAuth server for Gmail authentication using [Aurinko](https://aurinko.io). Handles the [2-hop Account OAuth flow](https://docs.aurinko.io/authentication/oauth-flow/account-oauth-flow), token exchange, and stores tokens in Redis.
 
 ## Deploy Directly with Docker
 
